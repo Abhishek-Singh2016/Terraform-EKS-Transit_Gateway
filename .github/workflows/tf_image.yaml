@@ -1,4 +1,4 @@
-name: Terraform-golden-image
+name: Terraform-Run-From-Golden-Image
 on:
   push:
     branches: [ "master" ]
@@ -31,6 +31,7 @@ jobs:
           ecr-repository: abhishek-ecr/abhishek-ecr
           image-tag: Terraform_golden_image_v1.0.3
         run: |
+          echo "$ECR_REGISTRY/$ecr-repository:$image-tag"
           docker run --rm \
             -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
