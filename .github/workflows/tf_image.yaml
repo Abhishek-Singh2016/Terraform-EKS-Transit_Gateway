@@ -58,7 +58,7 @@ jobs:
             -backend-config="bucket=abhishek-ops-tf-state-backend" \
             -backend-config="key=global/s3/terraform.tfstate" \
             -backend-config="region=us-east-1" \
-            -backend-config="dynamodb_table=terraform-state-locking"
+            -backend-config="dynamodb_table=terraform-state-locking" \
 
   # # JOB 2: Run Terraform inside that Cached Image
   # terraform:
