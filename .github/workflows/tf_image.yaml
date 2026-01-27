@@ -16,3 +16,4 @@ jobs:
       image-tag: Terraform_golden_image_v1.0.${{ github.run_number }}
     secrets:
       AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+
