@@ -38,7 +38,11 @@ jobs:
             -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
             -e AWS_REGION=us-east-1 \
             702175642104.dkr.ecr.us-east-1.amazonaws.com/abhishek-ecr/abhishek-ecr:Terraform_golden_image_v1.0.16 \
-            init -backend-config=Environments/spiderbackend-dev.conf
+            init \
+            -backend-config="bucket=abhishek-ops-tf-state-backend" \
+            -backend-config="key=global/s3/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-state-locking"
 
   # # JOB 2: Run Terraform inside that Cached Image
   # terraform:
