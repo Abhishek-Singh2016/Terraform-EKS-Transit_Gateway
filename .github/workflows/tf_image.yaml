@@ -25,7 +25,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-  publish-image:
+  publish-image_and_terraform-run:
     permissions:
       id-token: write  # Required for OIDC
       contents: read
@@ -37,18 +37,18 @@ jobs:
     secrets:
       AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
         
-  terraform-run: 
-    needs: publish-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Caller Repo
-        uses: actions/checkout@v4
+  # terraform-run: 
+  #   needs: publish-image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Caller Repo
+  #       uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: us-east-1
+  #     - name: Configure AWS Credentials (OIDC)
+  #       uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+  #         aws-region: us-east-1
 
 
       
