@@ -9,43 +9,33 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
+  build-and-push:
     runs-on: ubuntu-latest
-    container:
-      image: 702175642104.dkr.ecr.us-east-1.amazonaws.com/abhishek-ecr/abhishek-ecr:Terraform_golden_image_v1.0.16
-      options: --user root # If you need to write to specific system paths
     steps:
-      - uses: actions/checkout@v4
-      - run: terraform init 
-      - run: terraform plan 
-  
-  # build-and-push:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Caller Repo
-  #       uses: actions/checkout@v4
+      - name: Checkout Caller Repo
+        uses: actions/checkout@v4
 
-  #     - name: Configure AWS Credentials (OIDC)
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-  #         aws-region: us-east-1
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
 
-  #     - name: Login to Amazon ECR
-  #       id: login-ecr
-  #       uses: aws-actions/amazon-ecr-login@v2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
-  # publish-image_and_terraform-run:
-  #   permissions:
-  #     id-token: write  # Required for OIDC
-  #     contents: read
-  #   uses: Abhishek-Singh2016/Reuseable_workflow/.github/workflows/ecr-push.yaml@main
-  #   with:
-  #     aws-region: us-east-1
-  #     ecr-repository: abhishek-ecr/abhishek-ecr
-  #     image-tag: Terraform_golden_image_v1.0.${{ github.run_number }}
-  #   secrets:
-  #     AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  publish-image_and_terraform-run:
+    permissions:
+      id-token: write  # Required for OIDC
+      contents: read
+    uses: Abhishek-Singh2016/Reuseable_workflow/.github/workflows/ecr-push.yaml@main
+    with:
+      aws-region: us-east-1
+      ecr-repository: abhishek-ecr/abhishek-ecr
+      image-tag: Terraform_golden_image_v1.0.${{ github.run_number }}
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
         
   # terraform-run: 
   #   needs: publish-image
