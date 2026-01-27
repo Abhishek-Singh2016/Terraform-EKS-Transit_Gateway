@@ -30,13 +30,14 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ecr-repository: abhishek-ecr/abhishek-ecr
           image-tag: Terraform_golden_image_v1.0.3
+
         run: |
           echo "$ECR_REGISTRY/$ecr-repository:$image-tag"
           docker run --rm \
             -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
             -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
-            $ECR_REGISTRY/$ecr-repository:$image-tag \
+            ${{env.ECR_REGISTRY}}/${{env.ecr-repository}}:${{env.image-tag}} \
             apply -auto-approve
       
 
