@@ -14,6 +14,8 @@ jobs:
       aws-region: us-east-1
       ecr-repository: abhishek-ecr/abhishek-ecr
       image-tag: Terraform_golden_image_v1.0.${{ github.run_number }}
+      
     secrets:
       AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      
 
