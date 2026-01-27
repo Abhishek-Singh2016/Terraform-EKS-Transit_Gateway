@@ -1,0 +1,18 @@
+name: Terraform-golden-image
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch: # This enables the manual "Run workflow" button
+jobs:
+  # Call the reusable workflow
+  publish-image:
+    permissions:
+      id-token: write  # Required for OIDC
+      contents: read
+    uses: Abhishek-Singh2016/Reuseable_workflow/.github/workflows/ecr-push.yaml@main
+    with:
+      aws-region: us-east-1
+      ecr-repository: abhishek-ecr/abhishek-ecr
+      image-tag: Terraform_golden_image_v1.0.${{ github.run_number }}
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}

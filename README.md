@@ -1,0 +1,1 @@
+# Terraform_Golden_image
