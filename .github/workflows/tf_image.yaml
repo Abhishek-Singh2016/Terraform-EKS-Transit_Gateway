@@ -7,7 +7,7 @@ on:
 permissions:
   id-token: write
   contents: read
-  
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
             -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
             -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
-            $ECR_REGISTRY/$REPO:$TAG \
+            $ECR_REGISTRY/$ecr-repository:$TAG \
             apply -auto-approve
       
 
