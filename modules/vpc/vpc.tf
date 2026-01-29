@@ -112,7 +112,7 @@ resource "aws_route_table_association" "associateRouteTable" {
 #For NAT Gateway-29/07/2019
 #create this IP to assign it the NAT Gateway 
 resource "aws_eip" "createNATGateway" {
-  vpc      = true
+  domain     = "vpc"
   depends_on = ["aws_internet_gateway.createInternetGateway"]
   tags = local.common_tags
 }
