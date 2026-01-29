@@ -13,3 +13,13 @@ locals {
     team-access = "${var.teamaccess}"
   }
 }
+
+#default-tags
+#
+projectName="EKS-Multi-Region-Setup"
+createdOn="29-01-2026"
+businessUnit="information-technology"
+operationOwner="Automation"
+createdBy="terraform"
+product="EKS"
+teamaccess="Automation-Team"
