@@ -3,7 +3,7 @@
 
 # create the VPC
 resource "aws_vpc" "createVPC" {
-  cidr_block           = "${var.vpSpiderIDRblock}"
+  cidr_block           = "${var.vpcCIDRblock}"
   instance_tenancy     = "${var.instanceTenancy}"
   enable_dns_support   = "${var.dnsSupport}"
   enable_dns_hostnames = "${var.dnsHostNames}"
