@@ -8,7 +8,7 @@ variable "vpcName" {
 }
 
 variable "vpcCIDRblock" {
-    default ="spider"
+    default ="10.22.0.0/16"
 }
 
 variable "environmentName" {
@@ -46,9 +46,7 @@ variable "dnsSupport" {
 variable "dnsHostNames" {
   default = true
 }
-variable "vpcCIDRblock" {
-  default = "10.22.0.0/16"
-}
+
 variable "public_subnet_cidr" {
   default = "10.22.1.0/24"
 }
