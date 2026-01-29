@@ -7,7 +7,7 @@ variable "vpcName" {
   default="Spider-VPC"
 }
 
-"vpSpiderIDRblock" {
+variable "vpSpiderIDRblock" {
     default ="spider"
 }
 
