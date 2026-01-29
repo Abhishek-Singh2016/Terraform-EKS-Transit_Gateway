@@ -199,7 +199,7 @@ resource "aws_route_table" "createPrivateRouteTable" {
       "Name", "Spider_Private_Route_Table",
       "product", "Spider_Private_Route_Table",
     )
-  }"
+  )}"
 }
 
 resource "aws_route" "associatePrivate_Route" {

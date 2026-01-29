@@ -9,7 +9,3 @@ variable "projectName" {
   default="Multi-Region-EKS"
   
 }
-
-variable "environmentName" {
-    default="spider"
-}

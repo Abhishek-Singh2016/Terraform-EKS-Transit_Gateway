@@ -73,32 +73,18 @@ variable "private_subnet_cidr-3" {
   default     = "10.22.5.0/24"
 }
 
-variable "destinationCIDRblock" {
-  default = "0.0.0.0/0"
-}
-variable "ingressCIDRblock" {
-  #type    = "list"
-  default = ["49.205.253.240/32"]
-}
 variable "mapPublicIP" {
   default = true
 }
 
+locals {
+  common_tags = {
+    project         = "${lower(var.projectName)}"
+    environment      = "${lower(var.environmentName)}"
+  }
+}
 
-variable "servicename" {
-    default="secretsmanager"
+variable "projectName" {
+  default="Multi-Region-EKS"
   
-}
-
-variable "endpointtype" {
-    default="Interface"
-  
-}
-
-variable "sg_id"{
-  default="sg-07fd8bc7b070ca574"
-}
-
-variable "sg_id2"{
-  default="sg-0bb37f5deaa680e7a"
 }
