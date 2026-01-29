@@ -183,7 +183,7 @@ resource "aws_nat_gateway" "associateNATGateway" {
     depends_on = ["aws_internet_gateway.createInternetGateway"]
   tags = "${merge(
     local.common_tags,
-    tomap(
+    (
       "Name", "Spider_NAT_Gateway",
       "product", "Spider_NAT_Gateway",
 
