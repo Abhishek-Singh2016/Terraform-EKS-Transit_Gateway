@@ -7,13 +7,7 @@ resource "aws_vpc" "createVPC" {
   instance_tenancy     = "${var.instanceTenancy}"
   enable_dns_support   = "${var.dnsSupport}"
   enable_dns_hostnames = "${var.dnsHostNames}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}",
-      "product", "${var.vpcName}"
-    )
-  )}"
+  tags = local.common_tags
 }
 
 # end resource
@@ -24,13 +18,7 @@ resource "aws_subnet" "createPublicSubnet" {
   cidr_block              = "${var.public_subnet_cidr}"
   tomap_public_ip_on_launch = "${var.tomapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}_Public",
-      "product", "${var.vpcName}_Public"
-    )
-  )}" 
+  tags = local.common_tags 
 }
 # end resource
 # create the Subnet
@@ -39,13 +27,7 @@ resource "aws_subnet" "createPublicSubnet1" {
   cidr_block              = "${var.public_subnet_cidr-1}"
   tomap_public_ip_on_launch = "${var.tomapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic1}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}_Public1",
-      "product", "${var.vpcName}_Public1"
-    )
-  )}"
+  tags = local.common_tags
 }
 
 # Define the private subnet
@@ -53,13 +35,7 @@ resource "aws_subnet" "createPrivateSubnet1" {
   vpc_id            = "${aws_vpc.createVPC.id}"
   cidr_block        = "${var.private_subnet_cidr-1}"
   availability_zone = "${var.availabilityZonePrivate1}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}_Private1",
-      "product", "${var.vpcName}_Private1"
-    )
-  )}" 
+  tags = local.common_tags 
 }
 
 output "ACE_Project_Private_Subnet" {
@@ -72,38 +48,20 @@ resource "aws_subnet" "createPrivateSubnet2" {
   vpc_id            = "${aws_vpc.createVPC.id}"
   cidr_block        = "${var.private_subnet_cidr-2}"
   availability_zone = "${var.availabilityZonePrivate2}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}_Private2",
-      "product", "${var.vpcName}_Private2"
-    )
-  )}"
+  tags = local.common_tags
 }
 # Define the private subnet
 resource "aws_subnet" "createPrivateSubnet3" {
   vpc_id            = "${aws_vpc.createVPC.id}"
   cidr_block        = "${var.private_subnet_cidr-3}"
   availability_zone = "${var.availabilityZonePrivate3}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "${var.vpcName}_Private3",
-      "product", "${var.vpcName}_Private3"
-    )
-  )}"
+  tags = local.common_tags
 }
 
 
 resource "aws_route_table" "createPublicRouteTable1" {
   vpc_id = "${aws_vpc.createVPC.id}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "SpiderPublicRouteTable1",
-      "product", "SpiderPublicRouteTable1"
-    )
-  )}"
+  tags = local.common_tags
 }
 # end resource
 
@@ -125,26 +83,14 @@ resource "aws_route_table_association" "associateRouteTable1" {
 # Create the Internet Gateway
 resource "aws_internet_gateway" "createInternetGateway" {
   vpc_id = "${aws_vpc.createVPC.id}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "Spider_Internet_GateWay",
-      "product", "Spider_Internet_GateWay"
-    )
-  )}"
+  tags = local.common_tags
 }
 # end resource
 
 # Create the Route Table
 resource "aws_route_table" "createPublicRouteTable" {
   vpc_id = "${aws_vpc.createVPC.id}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "SpiderPublicRouteTable",
-       "product", "SpiderPublicRouteTable",
-    )
-  )}"
+  tags = local.common_tags
 }
 # end resource
 
@@ -168,38 +114,19 @@ resource "aws_route_table_association" "associateRouteTable" {
 resource "aws_eip" "createNATGateway" {
   vpc      = true
   depends_on = ["aws_internet_gateway.createInternetGateway"]
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "Spider_Elastic_NAT",
-       "product", "Spider_Elastic_NAT",
-    )
-  )}"
+  tags = local.common_tags
 }
 
 resource "aws_nat_gateway" "associateNATGateway" {
     allocation_id = "${aws_eip.createNATGateway.id}"
     subnet_id = "${aws_subnet.createPublicSubnet.id}"
     depends_on = ["aws_internet_gateway.createInternetGateway"]
-  tags = "${merge(
-    local.common_tags,
-    (
-      "Name", "Spider_NAT_Gateway",
-      "product", "Spider_NAT_Gateway",
-
-    )
-  )}"
+  tags = local.common_tags
 }
 
 resource "aws_route_table" "createPrivateRouteTable" {
     vpc_id = "${aws_vpc.createVPC.id}"
-  tags = "${merge(
-    local.common_tags,
-    tomap(
-      "Name", "Spider_Private_Route_Table",
-      "product", "Spider_Private_Route_Table",
-    )
-  )}"
+  tags = local.common_tags
 }
 
 resource "aws_route" "associatePrivate_Route" {
