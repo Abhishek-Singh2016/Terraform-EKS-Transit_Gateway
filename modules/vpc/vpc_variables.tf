@@ -81,10 +81,6 @@ variable "destinationCIDRblock" {
   default = "0.0.0.0/0"
 }
 
-variable "mapPublicIP" {
-  default = true
-}
-
 locals {
   common_tags = {
     project         = "${lower(var.projectName)}"
