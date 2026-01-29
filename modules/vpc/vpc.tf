@@ -95,103 +95,6 @@ resource "aws_subnet" "createPrivateSubnet3" {
 }
 
 
-# Create the Security Group
-resource "aws_security_group" "createSecurityGroup" {
-  vpc_id      = "${aws_vpc.createVPC.id}"
-  name        = "Spider_JUMP_Server_SG"
-  description = "Security group for Jump server"
-  ingress {
-    cidr_blocks = "${var.ingressCIDRblock}"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-  }
-
-egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["${aws_vpc.createVPC.cidr_block}"]
-}
-
-egress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    cidr_blocks     = ["8.39.54.0/23","204.141.42.0/23","65.154.166.0/24","136.143.190.0/23","216.52.72.0/23","204.141.32.0/23","8.40.222.0/23","31.186.243.0/24","185.20.209.150/32","185.20.209.0/24","185.20.211.0/24","87.252.213.0/24","89.36.170.0/24","89.36.171.0/24","163.53.93.0/24","163.53.94.0/27","43.228.181.48/29","103.89.75.0/24","103.89.74.0/24","103.103.196.0/22","103.117.158.0/23","34.206.108.39/32"]
-}
-
-
-  tags = "${merge(
-    local.common_tags,
-    map(
-      "Name", "Spider_JUMP_Server_SG",
-      "product", "Spider_JUMP_Server_SG"
-    )
-  )}"
-}
-# end resource
-
-# create VPC Network aSpideress control list
-resource "aws_network_acl" "createNetworkACL" {
-  vpc_id     = "${aws_vpc.createVPC.id}"
-  subnet_ids = ["${aws_subnet.createPublicSubnet.id}"]
-    ingress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "${var.destinationCIDRblock}"
-    from_port  = 0
-    to_port    = 0
-  }
-
-  egress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "${var.destinationCIDRblock}"
-    from_port  = 0
-    to_port    = 0
-  }
-    tags = "${merge(
-    local.common_tags,
-    map(
-      "Name", "Spider_VPC_ACL_Public",
-      "product", "Spider_VPC_ACL_Public"
-    )
-  )}"
-}
-# end resource
-
-resource "aws_network_acl" "createNetworkACL1" {
-  vpc_id     = "${aws_vpc.createVPC.id}"
-  subnet_ids = ["${aws_subnet.createPublicSubnet1.id}"]
-    ingress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "${var.destinationCIDRblock}"
-    from_port  = 0
-    to_port    = 0
-  }
-
-  egress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "${var.destinationCIDRblock}"
-    from_port  = 0
-    to_port    = 0
-  }
-    tags = "${merge(
-    local.common_tags,
-    map(
-      "Name", "Spider_VPC_ACL_Public1",
-      "product", "Spider_VPC_ACL_Public1"
-    )
-  )}"
-}
-
 resource "aws_route_table" "createPublicRouteTable1" {
   vpc_id = "${aws_vpc.createVPC.id}"
   tags = "${merge(
@@ -296,7 +199,7 @@ resource "aws_route_table" "createPrivateRouteTable" {
       "Name", "Spider_Private_Route_Table",
       "product", "Spider_Private_Route_Table",
     )
-  )}"
+  }"
 }
 
 resource "aws_route" "associatePrivate_Route" {
@@ -320,21 +223,4 @@ resource "aws_route_table_association" "associatePriavteSubnet3" {
     route_table_id = "${aws_route_table.createPrivateRouteTable.id}"
 }
 
-
-/*resource "aws_route" "associatePrivate_Route" {
-	route_table_id  = "${aws_route_table.createPrivateRouteTable.id}"
-	destination_cidr_block = "0.0.0.0/0"
-	nat_gateway_id = "${aws_nat_gateway.associateNATGateway.id}"
-}*/
-
-
-
-
-/*resource "aws_route_table_association" "ACE_Project_Priavte_Subnet_Association" {
-    subnet_id = "${aws_subnet.ACE_Project_Private.id}"
-    route_table_id = "${aws_route_table.ACE_Project_Private_Route.id}"
-          tags={
-        Name = "ACE_Project_Priavte_Subnet_Association"
-    }
-}*/
 # end vpc.tf
