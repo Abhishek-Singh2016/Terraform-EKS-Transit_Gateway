@@ -9,7 +9,7 @@ resource "aws_vpc" "createVPC" {
   enable_dns_hostnames = "${var.dnsHostNames}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}",
       "product", "${var.vpcName}"
     )
@@ -22,11 +22,11 @@ resource "aws_vpc" "createVPC" {
 resource "aws_subnet" "createPublicSubnet" {
   vpc_id                  = "${aws_vpc.createVPC.id}"
   cidr_block              = "${var.public_subnet_cidr}"
-  map_public_ip_on_launch = "${var.mapPublicIP}"
+  tomap_public_ip_on_launch = "${var.tomapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}_Public",
       "product", "${var.vpcName}_Public"
     )
@@ -37,11 +37,11 @@ resource "aws_subnet" "createPublicSubnet" {
 resource "aws_subnet" "createPublicSubnet1" {
   vpc_id                  = "${aws_vpc.createVPC.id}"
   cidr_block              = "${var.public_subnet_cidr-1}"
-  map_public_ip_on_launch = "${var.mapPublicIP}"
+  tomap_public_ip_on_launch = "${var.tomapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic1}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}_Public1",
       "product", "${var.vpcName}_Public1"
     )
@@ -55,7 +55,7 @@ resource "aws_subnet" "createPrivateSubnet1" {
   availability_zone = "${var.availabilityZonePrivate1}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}_Private1",
       "product", "${var.vpcName}_Private1"
     )
@@ -74,7 +74,7 @@ resource "aws_subnet" "createPrivateSubnet2" {
   availability_zone = "${var.availabilityZonePrivate2}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}_Private2",
       "product", "${var.vpcName}_Private2"
     )
@@ -87,7 +87,7 @@ resource "aws_subnet" "createPrivateSubnet3" {
   availability_zone = "${var.availabilityZonePrivate3}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "${var.vpcName}_Private3",
       "product", "${var.vpcName}_Private3"
     )
@@ -99,7 +99,7 @@ resource "aws_route_table" "createPublicRouteTable1" {
   vpc_id = "${aws_vpc.createVPC.id}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "SpiderPublicRouteTable1",
       "product", "SpiderPublicRouteTable1"
     )
@@ -127,7 +127,7 @@ resource "aws_internet_gateway" "createInternetGateway" {
   vpc_id = "${aws_vpc.createVPC.id}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "Spider_Internet_GateWay",
       "product", "Spider_Internet_GateWay"
     )
@@ -140,7 +140,7 @@ resource "aws_route_table" "createPublicRouteTable" {
   vpc_id = "${aws_vpc.createVPC.id}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "SpiderPublicRouteTable",
        "product", "SpiderPublicRouteTable",
     )
@@ -170,7 +170,7 @@ resource "aws_eip" "createNATGateway" {
   depends_on = ["aws_internet_gateway.createInternetGateway"]
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "Spider_Elastic_NAT",
        "product", "Spider_Elastic_NAT",
     )
@@ -183,7 +183,7 @@ resource "aws_nat_gateway" "associateNATGateway" {
     depends_on = ["aws_internet_gateway.createInternetGateway"]
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "Spider_NAT_Gateway",
       "product", "Spider_NAT_Gateway",
 
@@ -195,7 +195,7 @@ resource "aws_route_table" "createPrivateRouteTable" {
     vpc_id = "${aws_vpc.createVPC.id}"
   tags = "${merge(
     local.common_tags,
-    map(
+    tomap(
       "Name", "Spider_Private_Route_Table",
       "product", "Spider_Private_Route_Table",
     )
