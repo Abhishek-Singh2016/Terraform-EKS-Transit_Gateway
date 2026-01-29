@@ -1,0 +1,16 @@
+#VPC Variable Inputs
+
+region="us-east-1"
+vpcName="spider-vpc"
+environmentName="PROD"
+availabilityZonePublic="us-east-1b"
+availabilityZonePublic1="us-east-1c"
+availabilityZonePrivate1="us-east-1a"
+availabilityZonePrivate2="us-east-1c"
+availabilityZonePrivate3="us-east-1b"
+vpcCIDRblock="10.35.0.0/16"
+public_subnet_cidr="10.35.10.0/24"
+public_subnet_cidr-1="10.35.40.0/24"
+private_subnet_cidr-1="10.35.20.0/24"
+private_subnet_cidr-2="10.35.30.0/24"
+private_subnet_cidr-3="10.35.50.0/24"

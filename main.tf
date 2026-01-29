@@ -1,5 +1,4 @@
-module "my_storage" {
+module "vpc_module" {
   source = "./modules/vpc"
-
  
 }
