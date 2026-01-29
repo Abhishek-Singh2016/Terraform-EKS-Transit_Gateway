@@ -1,7 +1,7 @@
 name: Terraform-Run-on-Golden-Image
 on:
-  push:
-    branches: [ "master" ]
+#  push:
+#    branches: [ "master" ]
   workflow_dispatch: # This enables the manual "Run workflow" buttons
     inputs:
       terraform_action:
@@ -54,7 +54,7 @@ jobs:
 
       - name: Terraform plan/apply inside Golden Image
         run: |
-          if [ "${{ github.event.inputs.terraform_action }}" == "plan" ]; then
+          if [ "${{ github.event.inputs.terraform_action }}" == "apply" ]; then
             docker run --rm \
               -v ${{ github.workspace }}:/app \
               -w /app \
@@ -63,7 +63,7 @@ jobs:
               -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
               -e AWS_REGION=us-east-1 \
               702175642104.dkr.ecr.us-east-1.amazonaws.com/abhishek-ecr/abhishek-ecr:Terraform_golden_image_v1.0.16 \
-              plan
+              apply -auto-approve
 
           else
             docker run --rm \
@@ -74,7 +74,7 @@ jobs:
               -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
               -e AWS_REGION=us-east-1 \
               702175642104.dkr.ecr.us-east-1.amazonaws.com/abhishek-ecr/abhishek-ecr:Terraform_golden_image_v1.0.16 \
-              apply -auto-approve
+              plan
           fi
 
   # # JOB 2: Run Terraform inside that Cached Image
