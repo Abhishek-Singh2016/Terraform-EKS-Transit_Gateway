@@ -16,7 +16,7 @@ resource "aws_vpc" "createVPC" {
 resource "aws_subnet" "createPublicSubnet" {
   vpc_id                  = "${aws_vpc.createVPC.id}"
   cidr_block              = "${var.public_subnet_cidr}"
-  tomap_public_ip_on_launch = "${var.tomapPublicIP}"
+  map_public_ip_on_launch = "${var.mapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic}"
   tags = local.common_tags 
 }
@@ -25,7 +25,7 @@ resource "aws_subnet" "createPublicSubnet" {
 resource "aws_subnet" "createPublicSubnet1" {
   vpc_id                  = "${aws_vpc.createVPC.id}"
   cidr_block              = "${var.public_subnet_cidr-1}"
-  tomap_public_ip_on_launch = "${var.tomapPublicIP}"
+  map_public_ip_on_launch = "${var.mapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic1}"
   tags = local.common_tags
 }
