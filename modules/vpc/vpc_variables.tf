@@ -84,9 +84,16 @@ locals {
     project         = "${lower(var.projectName)}"
     environment      = "${lower(var.environmentName)}"
   }
+  public_eks_tags  = merge(local.common_tags, { "kubernetes.io/role/elb" = "1" })
+  private_eks_tags = merge(local.common_tags, { "kubernetes.io/role/internal-elb" = "1" })
 }
+
+# Then use them in the module like this:
+# public_subnet_tags = local.public_eks_tags
+
 
 variable "projectName" {
   default="Multi-Region-EKS"
   
 }
+

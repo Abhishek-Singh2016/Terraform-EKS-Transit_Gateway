@@ -18,7 +18,7 @@ resource "aws_subnet" "createPublicSubnet" {
   cidr_block              = "${var.public_subnet_cidr}"
   map_public_ip_on_launch = "${var.mapPublicIP}"
   availability_zone       = "${var.availabilityZonePublic}"
-  tags = local.common_tags 
+  tags = local.public_eks_tags 
 }
 # end resource
 # create the Subnet
@@ -35,7 +35,7 @@ resource "aws_subnet" "createPrivateSubnet1" {
   vpc_id            = "${aws_vpc.createVPC.id}"
   cidr_block        = "${var.private_subnet_cidr-1}"
   availability_zone = "${var.availabilityZonePrivate1}"
-  tags = local.common_tags 
+  tags = local.private_eks_tags 
 }
 
 output "ACE_Project_Private_Subnet" {
@@ -48,7 +48,7 @@ resource "aws_subnet" "createPrivateSubnet2" {
   vpc_id            = "${aws_vpc.createVPC.id}"
   cidr_block        = "${var.private_subnet_cidr-2}"
   availability_zone = "${var.availabilityZonePrivate2}"
-  tags = local.common_tags
+  tags = local.private_eks_tags
 }
 # Define the private subnet
 resource "aws_subnet" "createPrivateSubnet3" {
@@ -80,6 +80,7 @@ resource "aws_route_table_association" "associateRouteTable1" {
 
 }
 # end resource
+
 # Create the Internet Gateway
 resource "aws_internet_gateway" "createInternetGateway" {
   vpc_id = "${aws_vpc.createVPC.id}"
