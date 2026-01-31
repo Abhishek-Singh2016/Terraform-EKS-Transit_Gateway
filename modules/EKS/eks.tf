@@ -1,4 +1,4 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 21.15" # Latest 2026 release
+  version = "~> 20.0"" # Latest 2026 release
 }
