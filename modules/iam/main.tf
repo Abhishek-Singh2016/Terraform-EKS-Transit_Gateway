@@ -33,15 +33,15 @@ resource "aws_iam_user_login_profile" "admin" {
 }
 
 output "password" {
-value = aws_iam_user_login_profile.admin.encrypted_password
+value = aws_iam_user_login_profile.admin.password
 }
 
 
 output "access_key_id" {
-value = aws_iam_access_key.example_user_key.id
+value = aws_iam_access_key.admin.id
 }
 
 output "secret_access_key" {
-value = aws_iam_access_key.example_user_key.secret
+value = aws_iam_access_key.admin.secret
 sensitive = true
 }
