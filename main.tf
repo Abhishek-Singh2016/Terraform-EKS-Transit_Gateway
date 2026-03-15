@@ -4,7 +4,7 @@ module "vpc_module" {
 }
 
 module "iam_user" {
-  source = "./module/iam"
+  source = "./modules/iam"
 }
 
 /*
