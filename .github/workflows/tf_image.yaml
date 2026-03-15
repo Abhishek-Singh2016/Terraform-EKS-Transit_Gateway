@@ -38,6 +38,9 @@ jobs:
 
       - name: Terraform Init inside Golden Image
         run: |
+          ls -la /${{ github.workspace }} 
+          #rm -rf /${{ github.workspace }}/.terraform/
+          #rm /${{ github.workspace }}/.terraform.lock.hcl
           docker run --rm \
             -v ${{ github.workspace }}:/app \
             -w /app \
