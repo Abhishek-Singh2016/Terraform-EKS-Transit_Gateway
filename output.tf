@@ -5,7 +5,7 @@ value = module.iam_user.password
 
 
 output "access_key_id" {
-#value = module.iam_user.access_key_id
+value = module.iam_user.access_key_id
 }
 
 
