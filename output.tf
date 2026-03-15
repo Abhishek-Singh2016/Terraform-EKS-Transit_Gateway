@@ -1,12 +1,12 @@
 output "password" {
-value = module.iam.password
+value = module.iam_user.password
 }
 
 
 output "access_key_id" {
-value = module.iam.access_key_id
+value = module.iam_user.access_key_id
 }
 
 output "secret_access_key" {
-value = module.iam.secret_access_key
+value = module.iam_user.secret_access_key
 }
