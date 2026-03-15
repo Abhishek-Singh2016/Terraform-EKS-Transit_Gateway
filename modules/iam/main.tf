@@ -33,7 +33,7 @@ resource "aws_iam_user_login_profile" "admin" {
 }
 
 output "password" {
-value = aws_iam_user_login_profile.admin.password
+value = nonsensitive(aws_iam_user_login_profile.admin.password)
 }
 
 
@@ -42,6 +42,6 @@ value = aws_iam_access_key.admin.id
 }
 
 output "secret_access_key" {
-value = aws_iam_access_key.admin.secret
-sensitive = true
+value = nonsensitive(aws_iam_access_key.admin.secret)
+#sensitive = true
 }
