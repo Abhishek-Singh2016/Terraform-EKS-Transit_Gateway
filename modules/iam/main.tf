@@ -1,5 +1,5 @@
 resource "aws_iam_user" "admin" {
-  name = "learning-tf-eks"
+  name = "learning-tf"
   path = "/"
 
   tags = {
